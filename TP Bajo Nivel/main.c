@@ -4,6 +4,8 @@
 #include "estudiantes.h"
 #include "estudiantes.c"
 
+
+
 int menu()
 {
     int lectura = 0;
@@ -18,9 +20,10 @@ int menu()
     printf("Opcion 8: Subir la nota de un estudiante\n");
     printf("Opcion 9: Consultar si un estudiante aprobo una materia\n");
     printf("Opcion 10: Consultar promedio de un alumno\n");
-    printf("Opcion 11: Consultar la cantidad de aprobados de una materia\n");
-    printf("Opcion 12: Reiniciar el programa.\n");
-    printf("Opcion 13: Salir el programa.\n");
+    printf("Opcion 11: Consultar la cantidad de materias de un alumno\n");
+    printf("Opcion 12: Consultar la cantidad de aprobados de una materia\n");
+    printf("Opcion 13: Reiniciar el programa.\n");
+    printf("Opcion 14: Salir el programa.\n");
     printf("Ingrese una opcion\n");
     fflush(stdin);
     scanf("%d", &lectura);
@@ -124,11 +127,10 @@ int main()
             const char nombre_materia[NOMBRE_LENGTH];
             pedir_nombre(nombre_estudiante);
             pedir_materia(nombre_materia);
-            printf("Ingrese la edad del estudiante\n");
+            printf("Ingrese la nota del estudiante\n");
             scanf("%d", &nota);
             fflush(stdin);
             cargar_calificacion_de_examen(head_estudiante, nombre_estudiante, nombre_materia, nota);
-            printf("Nota cargada\n");
             break;
         }
         case 9:
@@ -149,17 +151,24 @@ int main()
         }
         case 11:
         {
+            const char nombre[NOMBRE_LENGTH];
+            pedir_nombre(nombre);
+            consultar_cantidad_de_materias(head_estudiante,nombre);
+            break;
+        }
+        case 12:
+        {
             const char nombre_materia[NOMBRE_LENGTH];
             pedir_materia(nombre_materia);
             aprobados_por_materia(head_estudiante, nombre_materia);
             break;
         }
-        case 12:
+        case 13:
         {
             borrar_todos_los_estudientes(head_estudiante);
             break;
         }
-        case 13:
+        case 14:
         {
             printf("Saliendo del sistema...\n");
             borrar_todos_los_estudientes(head_estudiante);
@@ -167,7 +176,7 @@ int main()
         default:
             printf("Opcion invalida.\n");
         }
-    } while (opcion != 13);
+    } while (opcion != 14);
 
     return 0;
 }

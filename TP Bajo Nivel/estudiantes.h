@@ -2,6 +2,8 @@
 #define ESTUDIANTES_H
 
 #define NOMBRE_LENGTH 100
+
+
 // Struct Materia
 typedef struct
 {
@@ -35,6 +37,7 @@ void mostrar_todos_las_materias(Estudiante *estudiante);
 void dar_de_baja_estudiante(Estudiante **estudiante, const char *nombre);
 void dar_de_baja_materia(Estudiante *estudiante, const char *nombre_estudiante, const char *nombre_materia);
 void cargar_calificacion_de_examen(Estudiante *estudiante, const char *nombre_alumno, const char *nombre_materia, int nota);
+void consultar_cantidad_de_materias(Estudiante *estudiante, const char *nombre_estudiante);
 void consultar_aprobacion(Estudiante *estudiante, const char *nombre_alumno, const char *nombre_materia);
 void promedios_de_un_alumno(Estudiante *estudiante, const char *nombre_alumno);
 void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia);

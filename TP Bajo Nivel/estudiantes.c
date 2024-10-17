@@ -242,7 +242,7 @@ void consultar_aprobacion(Estudiante *estudiante, const char *nombre_alumno, con
 
 void promedios_de_un_alumno(Estudiante *estudiante, const char *nombre_alumno)
 {
-    int promedios;
+    int promedios = 0;
 
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre_alumno);
     if (estudiante_buscado == NULL)
@@ -259,6 +259,7 @@ void promedios_de_un_alumno(Estudiante *estudiante, const char *nombre_alumno)
     }
 
     promedios = promedios / estudiante_buscado->cantidad_materias;
+    
     if (estudiante_buscado->cantidad_materias == 0)
     {
         printf("El alumno no rindio ninguna materia");
@@ -280,7 +281,7 @@ void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia)
         MateriaNode *materia_temp = estudiante_temp->materias;
         while (materia_temp != NULL)
         {
-            if (materia_temp->materia.nombre == nombre_materia)
+            if (strcmp(materia_temp->materia.nombre, nombre_materia) == 0)
             {
                 if (materia_temp->materia.aprobado_bool == 1)
                 {
@@ -288,10 +289,7 @@ void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia)
                 }
                 break;
             }
-            else
-            {
-                materia_temp->next;
-            }
+            materia_temp->next;
         }
         estudiante_temp = estudiante_temp->next;
     }
