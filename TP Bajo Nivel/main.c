@@ -114,8 +114,7 @@ int main()
         {
             const char nombre_estudiante[NOMBRE_LENGTH];
             pedir_nombre(nombre_estudiante);
-            dar_de_baja_estudiante(head_estudiante, nombre_estudiante);
-            printf("Estudiante dado de baja\n");
+            dar_de_baja_estudiante(&head_estudiante, nombre_estudiante);
             break;
         }
         case 8:

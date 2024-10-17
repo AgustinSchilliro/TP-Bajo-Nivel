@@ -32,7 +32,7 @@ Estudiante *buscar_estudiante(Estudiante *estudiante, const char *nombre);
 void agregarMateria(Estudiante *estudiante, const char *nombre_estudiante, const char *nombre_materia);
 void mostrar_todos_los_estudiantes(Estudiante *estudiante);
 void mostrar_todos_las_materias(Estudiante *estudiante);
-void dar_de_baja_estudiante(Estudiante *estudiante, const char *nombre);
+void dar_de_baja_estudiante(Estudiante **estudiante, const char *nombre);
 void dar_de_baja_materia(Estudiante *estudiante, const char *nombre_estudiante, const char *nombre_materia);
 void cargar_calificacion_de_examen(Estudiante *estudiante, const char *nombre_alumno, const char *nombre_materia, int nota);
 void consultar_aprobacion(Estudiante *estudiante, const char *nombre_alumno, const char *nombre_materia);

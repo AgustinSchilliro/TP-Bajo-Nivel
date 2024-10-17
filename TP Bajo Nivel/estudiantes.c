@@ -90,28 +90,33 @@ void mostrar_todos_las_materias(Estudiante *estudiante)
     return;
 }
 
-void dar_de_baja_estudiante(Estudiante *estudiante, const char *nombre)
+void dar_de_baja_estudiante(Estudiante **estudiante, const char *nombre)
 {
-    Estudiante *temp_estudiante = estudiante;
+    Estudiante *temp_estudiante = *estudiante;
     Estudiante *previo = NULL;
+
     while (temp_estudiante != NULL)
     {
         if (strcmp(temp_estudiante->nombre, nombre) == 0)
         {
             if (previo == NULL)
             {
-                estudiante = temp_estudiante->next;
+                *estudiante = temp_estudiante->next;
             }
             else
             {
                 previo->next = temp_estudiante->next;
             }
-            borrar_todas_las_materias(estudiante, nombre);
+            borrar_todas_las_materias(temp_estudiante, nombre);
+            memset(temp_estudiante, 0, sizeof(Estudiante));
             free(temp_estudiante);
-            printf("Estudiante eliminado\n");
+            printf("Estudiante dado de baja.\n");
+            return;
         }
-        printf("Estudiante no encontrado\n");
+        previo = temp_estudiante;
+        temp_estudiante = temp_estudiante->next;
     }
+    printf("Estudiante no encontrado\n");
     return;
 }
 
@@ -139,6 +144,7 @@ void dar_de_baja_materia(Estudiante *estudiante, const char *nombre_estudiante, 
             {
                 materia_previa->next = temp_materia->next;
             }
+            memset(temp_materia, 0, sizeof(MateriaNode));
             free(temp_materia);
             printf("Materia eliminada\n");
             return;
@@ -307,6 +313,7 @@ void borrar_todas_las_materias(Estudiante *estudiante, const char *nombre)
     while (temp_materia != NULL)
     {
         MateriaNode *aux = temp_materia->next;
+        memset(temp_materia, 0, sizeof(MateriaNode));
         free(temp_materia);
         temp_materia = aux;
     }
@@ -320,13 +327,10 @@ void borrar_todos_los_estudientes(Estudiante *estudiante)
     {
         Estudiante *siguiente_estudiante = estudiante->next;
         borrar_todas_las_materias(estudiante, estudiante->nombre);
+        memset(estudiante, 0, sizeof(Estudiante));
         free(estudiante);
         estudiante = siguiente_estudiante;
     }
-
-    estudiante = (Estudiante *)malloc(sizeof(Estudiante));
-
-
     printf("Todos los estudiantes fueron borrados\n");
-    return; 
+    return;
 }
