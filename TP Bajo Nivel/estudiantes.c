@@ -10,7 +10,7 @@ void agregarEstudiante(Estudiante **estudiantes, const char *nombre, int edad)
     Estudiante *nuevo_estudiante = (Estudiante *)malloc(sizeof(Estudiante));
     if (nuevo_estudiante == NULL)
     {
-        printf("Error de memoria\n");
+        printf(RED "Error de memoria\n" RESET);
         return;
     }
     strncpy(nuevo_estudiante->nombre, nombre, NOMBRE_LENGTH);
@@ -41,14 +41,14 @@ void agregarMateria(Estudiante *estudiante, const char *nombre_estudiante, const
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre_estudiante);
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante No encontrado\n");
+        printf(RED "Estudiante No encontrado\n" RESET);
         return;
     }
 
     MateriaNode *nueva_materia = (MateriaNode *)malloc(sizeof(MateriaNode));
     if (nueva_materia == NULL)
     {
-        printf("Error de memoria\n");
+        printf(RED "Error de memoria\n" RESET);
         return;
     }
 
@@ -67,7 +67,7 @@ void mostrar_todos_los_estudiantes(Estudiante *estudiante)
     Estudiante *temp_estudiante = estudiante;
     while (temp_estudiante != NULL)
     {
-        printf("Nombre: %s, Edad: %d\n", temp_estudiante->nombre, temp_estudiante->edad);
+        printf(BLUE "Nombre: %s, Edad: %d\n" RESET, temp_estudiante->nombre, temp_estudiante->edad );
         temp_estudiante = temp_estudiante->next;
     }
     return;
@@ -79,10 +79,10 @@ void mostrar_todos_las_materias(Estudiante *estudiante)
     while (temp_estudiante != NULL)
     {
         MateriaNode *temp_materia = temp_estudiante->materias;
-        printf("Nombre del estudiante: %s\n", temp_estudiante->nombre);
+        printf(BLUE "Nombre del estudiante: %s\n" RESET, temp_estudiante->nombre);
         while (temp_materia != NULL)
         {
-            printf("Materia: %s\n", temp_materia->materia.nombre);
+            printf(MAGENTA "Materia: %s\n" RESET, temp_materia->materia.nombre);
             temp_materia = temp_materia->next;
         }
         temp_estudiante = temp_estudiante->next;
@@ -110,13 +110,13 @@ void dar_de_baja_estudiante(Estudiante **estudiante, const char *nombre)
             borrar_todas_las_materias(temp_estudiante, nombre);
             memset(temp_estudiante, 0, sizeof(Estudiante));
             free(temp_estudiante);
-            printf("Estudiante dado de baja.\n");
+            printf(BLUE "Estudiante dado de baja.\n" RESET);
             return;
         }
         previo = temp_estudiante;
         temp_estudiante = temp_estudiante->next;
     }
-    printf("Estudiante no encontrado\n");
+    printf(RED "Estudiante No encontrado\n" RESET);
     return;
 }
 
@@ -126,7 +126,7 @@ void dar_de_baja_materia(Estudiante *estudiante, const char *nombre_estudiante, 
 
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante No encontrado\n");
+        printf(RED "Estudiante No encontrado\n" RESET);
         return;
     }
     MateriaNode *temp_materia = estudiante_buscado->materias;
@@ -144,15 +144,16 @@ void dar_de_baja_materia(Estudiante *estudiante, const char *nombre_estudiante, 
             {
                 materia_previa->next = temp_materia->next;
             }
+            estudiante_buscado->cantidad_materias--;
             memset(temp_materia, 0, sizeof(MateriaNode));
             free(temp_materia);
-            printf("Materia eliminada\n");
+            printf(BLUE "Materia eliminada\n" RESET);
             return;
         }
         materia_previa = temp_materia;
         temp_materia = temp_materia->next;
     }
-    printf("Materia No encontrada\n");
+    printf(RED "Materia No encontrada\n" RESET);
     return;
 }
 
@@ -162,11 +163,11 @@ void consultar_cantidad_de_materias(Estudiante *estudiante, const char *nombre_e
 
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante No encontrado\n");
+        printf(RED "Estudiante No encontrado\n" RESET);
         return;
     }
 
-    printf("El alumno esta cursando %d materias", estudiante_buscado->cantidad_materias);
+    printf("El alumno esta cursando %d materias\n", estudiante_buscado->cantidad_materias);
     return;
 }
 
@@ -175,7 +176,7 @@ void cargar_calificacion_de_examen(Estudiante *estudiante, const char *nombre_al
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre_alumno);
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante no encontrado");
+        printf(RED "Estudiante No encontrado\n" RESET);
         return;
     }
     MateriaNode *temp_materia = estudiante_buscado->materias;
@@ -200,7 +201,7 @@ void cargar_calificacion_de_examen(Estudiante *estudiante, const char *nombre_al
         }
         temp_materia = temp_materia->next;
     }
-    printf("Materia no encontrada\n");
+    printf(RED "Materia No encontrada\n" RESET);
     return;
 }
 
@@ -209,7 +210,7 @@ void consultar_aprobacion(Estudiante *estudiante, const char *nombre_alumno, con
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre_alumno);
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante no encontrado\n");
+        printf(RED "Estudiante No encontrado\n" RESET);
         return;
     }
     MateriaNode *temp_materia = estudiante_buscado->materias;
@@ -236,7 +237,7 @@ void consultar_aprobacion(Estudiante *estudiante, const char *nombre_alumno, con
         }
         temp_materia = temp_materia->next;
     }
-    printf("Materia no encontrada\n");
+    printf(RED "Materia No encontrada\n" RESET);
     return;
 }
 
@@ -247,11 +248,18 @@ void promedios_de_un_alumno(Estudiante *estudiante, const char *nombre_alumno)
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre_alumno);
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante no encontrado\n");
+        printf(RED "Estudiante No encontrado\n" RESET);
+        return;
+    }
+
+    if (estudiante_buscado->cantidad_materias == 0)
+    {
+        printf(RED "El alumno no rindio ninguna materia\n" RESET);
         return;
     }
 
     MateriaNode *temp_materia = estudiante_buscado->materias;
+
     while (temp_materia != NULL)
     {
         promedios = promedios + temp_materia->materia.calificacion;
@@ -259,17 +267,8 @@ void promedios_de_un_alumno(Estudiante *estudiante, const char *nombre_alumno)
     }
 
     promedios = promedios / estudiante_buscado->cantidad_materias;
-    
-    if (estudiante_buscado->cantidad_materias == 0)
-    {
-        printf("El alumno no rindio ninguna materia");
-        return;
-    }
-    else
-    {
-        printf("El alumno tiene un promedio de:%d\n", promedios);
-        return;
-    }
+    printf(BLUE "El alumno tiene un promedio de:%d\n" RESET, promedios);
+    return;
 }
 
 void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia)
@@ -293,7 +292,7 @@ void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia)
         }
         estudiante_temp = estudiante_temp->next;
     }
-    printf("La cantidad de aprobados en la materia %s es %d\n", nombre_materia, cantidad_aprobados);
+    printf(BLUE "La cantidad de aprobados en la materia %s es %d\n" RESET, nombre_materia, cantidad_aprobados);
     return;
 }
 
@@ -302,7 +301,7 @@ void borrar_todas_las_materias(Estudiante *estudiante, const char *nombre)
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre);
     if (estudiante_buscado == NULL)
     {
-        printf("Estudiante No encontrado\n");
+        printf(RED "Estudiante No encontrado\n" RESET);
         return;
     }
 
@@ -315,7 +314,6 @@ void borrar_todas_las_materias(Estudiante *estudiante, const char *nombre)
         free(temp_materia);
         temp_materia = aux;
     }
-    printf("Materias del alumno eliminidas\n");
     return;
 }
 
@@ -329,6 +327,5 @@ void borrar_todos_los_estudientes(Estudiante *estudiante)
         free(estudiante);
         estudiante = siguiente_estudiante;
     }
-    printf("Todos los estudiantes fueron borrados\n");
     return;
 }
