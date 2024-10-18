@@ -171,14 +171,14 @@ int main()
         }
         case 13:
         {
-            borrar_todos_los_estudientes(head_estudiante);
+            borrar_todos_los_estudientes(&head_estudiante);
             printf(RED "Programa Reinciado\n" RESET);
             break;
         }
         case 14:
         {
             printf(RED "Saliendo del sistema...\n" RESET);
-            borrar_todos_los_estudientes(head_estudiante);
+            borrar_todos_los_estudientes(&head_estudiante);
             break;
         }
         default:

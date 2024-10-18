@@ -48,7 +48,7 @@ void consultar_cantidad_de_materias(Estudiante *estudiante, const char *nombre_e
 void consultar_aprobacion(Estudiante *estudiante, const char *nombre_alumno, const char *nombre_materia);
 void promedios_de_un_alumno(Estudiante *estudiante, const char *nombre_alumno);
 void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia);
-void borrar_todos_los_estudientes(Estudiante *estudiante);
+void borrar_todos_los_estudientes(Estudiante **estudiante);
 void borrar_todas_las_materias(Estudiante *estudiante, const char *nombre);
 
 #endif 

@@ -67,7 +67,7 @@ void mostrar_todos_los_estudiantes(Estudiante *estudiante)
     Estudiante *temp_estudiante = estudiante;
     while (temp_estudiante != NULL)
     {
-        printf(BLUE "Nombre: %s, Edad: %d\n" RESET, temp_estudiante->nombre, temp_estudiante->edad );
+        printf(BLUE "Nombre: %s, Edad: %d\n" RESET, temp_estudiante->nombre, temp_estudiante->edad);
         temp_estudiante = temp_estudiante->next;
     }
     return;
@@ -306,26 +306,28 @@ void borrar_todas_las_materias(Estudiante *estudiante, const char *nombre)
     }
 
     MateriaNode *temp_materia = estudiante_buscado->materias;
+    MateriaNode *aux;
 
     while (temp_materia != NULL)
     {
-        MateriaNode *aux = temp_materia->next;
-        memset(temp_materia, 0, sizeof(MateriaNode));
+        aux = temp_materia->next;
         free(temp_materia);
         temp_materia = aux;
     }
+    estudiante_buscado->materias = NULL;
     return;
 }
 
-void borrar_todos_los_estudientes(Estudiante *estudiante)
+void borrar_todos_los_estudientes(Estudiante **estudiante)
 {
-    while (estudiante != NULL)
+    Estudiante *temp;
+    while (*estudiante != NULL)
     {
-        Estudiante *siguiente_estudiante = estudiante->next;
-        borrar_todas_las_materias(estudiante, estudiante->nombre);
-        memset(estudiante, 0, sizeof(Estudiante));
+        temp = *estudiante;
+        borrar_todas_las_materias(temp, temp->nombre);
+        *estudiante = (*estudiante)->next;
         free(estudiante);
-        estudiante = siguiente_estudiante;
+        
     }
     return;
 }
