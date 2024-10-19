@@ -38,6 +38,7 @@ typedef struct Estudiante
 
 void agregarEstudiante(Estudiante** estudiantes, const char *nombre, int edad);
 Estudiante *buscar_estudiante(Estudiante *estudiante, const char *nombre);
+void *buscar_estudiante_edad(Estudiante *estudiante, int edad_minima, int edad_maxima);
 void agregarMateria(Estudiante *estudiante, const char *nombre_estudiante, const char *nombre_materia);
 void mostrar_todos_los_estudiantes(Estudiante *estudiante);
 void mostrar_todos_las_materias(Estudiante *estudiante);

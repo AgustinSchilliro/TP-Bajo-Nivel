@@ -4,11 +4,10 @@
 #include "estudiantes.h"
 #include "estudiantes.c"
 
-
 int menu()
 {
     int lectura = 0;
-    printf(BLUE  "======Menu de Estudiantes=====\n"  RESET);
+    printf(BLUE "======Menu de Estudiantes=====\n" RESET);
     printf(YELLOW "Opcion 1: Agregar un estudiante\n" RESET);
     printf(YELLOW "Opcion 2: Buscar un estudiante\n" RESET);
     printf(YELLOW "Opcion 3: Agregar materia a un estudiante\n" RESET);
@@ -18,11 +17,12 @@ int menu()
     printf(YELLOW "Opcion 7: Dar de baja a un estudiante\n" RESET);
     printf(YELLOW "Opcion 8: Subir la nota de un estudiante\n" RESET);
     printf(YELLOW "Opcion 9: Consultar si un estudiante aprobo una materia\n" RESET);
-    printf(YELLOW "Opcion 10: Consultar promedio de un alumno\n" RESET);
-    printf(YELLOW "Opcion 11: Consultar la cantidad de materias de un alumno\n" RESET);
-    printf(YELLOW "Opcion 12: Consultar la cantidad de aprobados de una materia\n" RESET);
-    printf(YELLOW "Opcion 13: Reiniciar el programa.\n" RESET);
-    printf(RED  "Opcion 14: Salir el programa.\n" RESET);
+    printf(YELLOW "Opcion 10: Buscar estudiantes por rango de edad\n" RESET);
+    printf(YELLOW "Opcion 11: Consultar promedio de un alumno\n" RESET);
+    printf(YELLOW "Opcion 12: Consultar la cantidad de materias de un alumno\n" RESET);
+    printf(YELLOW "Opcion 13: Consultar la cantidad de aprobados de una materia\n" RESET);
+    printf(YELLOW "Opcion 14: Reiniciar el programa.\n" RESET);
+    printf(RED "Opcion 15: Salir el programa.\n" RESET);
     printf(GREEN "Ingrese una opcion\n" RESET);
     fflush(stdin);
     scanf("%d", &lectura);
@@ -40,7 +40,7 @@ void pedir_materia(const char nombre_materia[NOMBRE_LENGTH])
 
 void pedir_nombre(const char nombre_estudiante[NOMBRE_LENGTH])
 {
-    printf(GREEN  "Ingrese el nombre del estudiante\n" RESET);
+    printf(GREEN "Ingrese el nombre del estudiante\n" RESET);
     gets(nombre_estudiante);
     fflush(stdin);
 }
@@ -59,11 +59,11 @@ int main()
             int edad;
             const char nombre[NOMBRE_LENGTH];
             pedir_nombre(nombre);
-            printf(GREEN  "Ingrese la edad del estudiante\n" RESET);
+            printf(GREEN "Ingrese la edad del estudiante\n" RESET);
             scanf("%d", &edad);
             fflush(stdin);
             agregarEstudiante(&head_estudiante, nombre, edad);
-            printf(BLUE " Estudiante Agregado\n "RESET);
+            printf(BLUE " Estudiante Agregado\n " RESET);
             break;
         }
 
@@ -74,17 +74,17 @@ int main()
             Estudiante *estudiante_buscado = buscar_estudiante(head_estudiante, nombre);
             if (estudiante_buscado == NULL)
             {
-                printf(RED"El alumno no esta en la lista\n"RESET);
+                printf(RED "El alumno no esta en la lista\n" RESET);
             }
             else
             {
-            MateriaNode *materia_temp = estudiante_buscado->materias;
-            printf(BLUE "El estudiante tiene de nombre %s, su edad es %i y esta cursando las materias:\n" RESET, estudiante_buscado->nombre, estudiante_buscado->edad);
-            while (materia_temp != NULL)
-            {
-                printf(MAGENTA "Nombre de materia: %s\n" RESET, materia_temp->materia.nombre);
-                materia_temp = materia_temp->next;
-            }
+                MateriaNode *materia_temp = estudiante_buscado->materias;
+                printf(BLUE "El estudiante tiene de nombre %s, su edad es %i y esta cursando las materias:\n" RESET, estudiante_buscado->nombre, estudiante_buscado->edad);
+                while (materia_temp != NULL)
+                {
+                    printf(MAGENTA "Nombre de materia: %s\n" RESET, materia_temp->materia.nombre);
+                    materia_temp = materia_temp->next;
+                }
             }
             break;
         }
@@ -100,7 +100,7 @@ int main()
         }
         case 4:
         {
-            printf(MAGENTA"Lista de estudiante:\n" RESET);
+            printf(MAGENTA "Lista de estudiante:\n" RESET);
             mostrar_todos_los_estudiantes(head_estudiante);
             break;
         }
@@ -133,10 +133,11 @@ int main()
             const char nombre_materia[NOMBRE_LENGTH];
             pedir_nombre(nombre_estudiante);
             pedir_materia(nombre_materia);
-            printf(GREEN  "Ingrese la nota del estudiante\n" RESET);
+            printf(GREEN "Ingrese la nota del estudiante\n" RESET);
             scanf("%d", &nota);
             fflush(stdin);
-            if (1 > nota || nota > 10 ) {
+            if (1 > nota || nota > 10)
+            {
                 printf(RED "La nota debe ser entre 1 y 10\n" RESET);
                 break;
             }
@@ -154,32 +155,46 @@ int main()
         }
         case 10:
         {
-            const char nombre[NOMBRE_LENGTH];
-            pedir_nombre(nombre);
-            promedios_de_un_alumno(head_estudiante, nombre);
+            int edad_minima;
+            int edad_maxima;
+            printf(GREEN "Ingrese el minimo de edad del rango que quiere buscar\n" RESET);
+            scanf("%d", &edad_minima);
+            fflush(stdin);
+            printf(GREEN "Ingrese el maximo de edad del rango que quiere buscar\n" RESET);
+            scanf("%d", &edad_maxima);
+            fflush(stdin);
+            buscar_estudiante_edad(head_estudiante, edad_minima,edad_maxima);
             break;
         }
         case 11:
         {
             const char nombre[NOMBRE_LENGTH];
             pedir_nombre(nombre);
+            promedios_de_un_alumno(head_estudiante, nombre);
+            break;
+        }
+
+        case 12:
+        {
+            const char nombre[NOMBRE_LENGTH];
+            pedir_nombre(nombre);
             consultar_cantidad_de_materias(head_estudiante, nombre);
             break;
         }
-        case 12:
+        case 13:
         {
             const char nombre_materia[NOMBRE_LENGTH];
             pedir_materia(nombre_materia);
             aprobados_por_materia(head_estudiante, nombre_materia);
             break;
         }
-        case 13:
+        case 14:
         {
             borrar_todos_los_estudientes(&head_estudiante);
             printf(RED "Programa Reinciado\n" RESET);
             break;
         }
-        case 14:
+        case 15:
         {
             printf(RED "Saliendo del sistema...\n" RESET);
             borrar_todos_los_estudientes(&head_estudiante);
@@ -188,7 +203,7 @@ int main()
         default:
             printf("Opcion invalida.\n");
         }
-    } while (opcion != 14);
+    } while (opcion != 15);
 
     return 0;
 }

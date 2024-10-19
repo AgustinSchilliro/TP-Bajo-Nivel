@@ -36,6 +36,19 @@ Estudiante *buscar_estudiante(Estudiante *estudiante, const char *nombre)
     return NULL;
 }
 
+void *buscar_estudiante_edad(Estudiante *estudiante, int edad_minima, int edad_maxima)
+{
+    Estudiante *temp_estudiante = estudiante;
+    while (temp_estudiante != NULL)
+    {
+        if (temp_estudiante->edad >= edad_minima && temp_estudiante->edad <= edad_maxima)
+        {
+            printf(BLUE "El alumno %s esta dentro del rango de edad\n" RESET, temp_estudiante->nombre);
+        }
+        temp_estudiante = temp_estudiante->next;
+    }
+}
+
 void agregarMateria(Estudiante *estudiante, const char *nombre_estudiante, const char *nombre_materia)
 {
     Estudiante *estudiante_buscado = buscar_estudiante(estudiante, nombre_estudiante);
