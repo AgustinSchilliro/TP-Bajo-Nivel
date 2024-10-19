@@ -16,13 +16,13 @@ int menu()
     printf(YELLOW "Opcion 5: Mostrar todas las materias de todos los estudiantes\n" RESET);
     printf(YELLOW "Opcion 6: Dar de baja un estudiante de una materia\n" RESET);
     printf(YELLOW "Opcion 7: Dar de baja a un estudiante\n" RESET);
-    printf(YELLOW "⬆Opcion 8: Subir la nota de un estudiante\n" RESET);
+    printf(YELLOW "Opcion 8: Subir la nota de un estudiante\n" RESET);
     printf(YELLOW "Opcion 9: Consultar si un estudiante aprobo una materia\n" RESET);
     printf(YELLOW "Opcion 10: Consultar promedio de un alumno\n" RESET);
     printf(YELLOW "Opcion 11: Consultar la cantidad de materias de un alumno\n" RESET);
     printf(YELLOW "Opcion 12: Consultar la cantidad de aprobados de una materia\n" RESET);
     printf(YELLOW "Opcion 13: Reiniciar el programa.\n" RESET);
-    printf(RED "Opcion 14: Salir el programa.\n" RESET);
+    printf(RED  "Opcion 14: Salir el programa.\n" RESET);
     printf(GREEN "Ingrese una opcion\n" RESET);
     fflush(stdin);
     scanf("%d", &lectura);
@@ -136,6 +136,10 @@ int main()
             printf(GREEN  "Ingrese la nota del estudiante\n" RESET);
             scanf("%d", &nota);
             fflush(stdin);
+            if (1 > nota || nota > 10 ) {
+                printf(RED "La nota debe ser entre 1 y 10\n" RESET);
+                break;
+            }
             cargar_calificacion_de_examen(head_estudiante, nombre_estudiante, nombre_materia, nota);
             break;
         }
