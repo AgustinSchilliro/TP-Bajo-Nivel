@@ -301,7 +301,7 @@ void aprobados_por_materia(Estudiante *estudiante, const char *nombre_materia)
                 }
                 break;
             }
-            materia_temp->next;
+            materia_temp = materia_temp->next;
         }
         estudiante_temp = estudiante_temp->next;
     }
